@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 axios.defaults.baseURL = 'http://localhost:8080'
+axios.defaults.headers['Bearer: '] = 'asdsadas'
 let id
 
 async function fetchUsers() {
@@ -12,6 +13,7 @@ async function fetchUserById(id) {
 }
 
 test('createUser', async () => {
+  expect.assertions(2)
   try {
     const createdUser = await axios.post('/users', {
       name: 'test', email: 'test@test.com'
@@ -26,6 +28,7 @@ test('createUser', async () => {
 })
 
 test('fetch users', async () => {
+  expect.assertions(2)
   try {
     const users = await fetchUsers()
     expect(typeof users.data.length).toBe('number')
@@ -36,6 +39,7 @@ test('fetch users', async () => {
 })
 
 test('fetch single user', async () => {
+  expect.assertions(2)
   try {
     const user = await fetchUserById(id)
     expect(user.data.name).toBe('test')
@@ -46,6 +50,7 @@ test('fetch single user', async () => {
 })
 
 test('update user', async () => {
+  expect.assertions(2)
   try {
     const updatedUser = await axios.put(`/users/${id}`, {
       name: 'updatedTestName', email: 'updatedTestEmail@test.com'
@@ -58,6 +63,7 @@ test('update user', async () => {
 })
 
 test('delete user', async () => {
+  expect.assertions(1)
   try {
     const deletedResponse = await axios.delete(`/users/${id}`)
     expect(deletedResponse.data.ok).toBe(true)
