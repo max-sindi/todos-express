@@ -13,6 +13,7 @@ export const login = async (request, response) => {
   } else {
     const isValid = user.verifyPasswordSync(password)
     if(!isValid) {
+      status = 401
       dataToResponse = 'Invalid password'
     } else {
       dataToResponse = {

@@ -1,4 +1,5 @@
 import User from '../models/User'
+import queryString from "query-string"
 
 /***
   GET ALL
@@ -6,15 +7,18 @@ import User from '../models/User'
 export const getAll = async (request, response) => {
   let status = 200
   let dataToResponse = null
+  const limit = parseInt(request.query.limit) || 20
+  const skip = parseInt(request.query.skip) || 0
+  const search = request.query.search || 'sa'
 
   try {
-    dataToResponse = await User.find()
+    // dataToResponse = await User.find({$text: {$search: search}}).skip(skip).limit(limit)
+    dataToResponse = await User.find().skip(skip).limit(limit)
   } catch(e) {
     status = 500
     dataToResponse = e
   }
-  
-  response.status(status).send(dataToResponse)
+  response.status(status).json(dataToResponse)
 }
 
 /***

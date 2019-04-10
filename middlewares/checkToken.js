@@ -1,12 +1,19 @@
+const jwt = require('jsonwebtoken')
+
 const checkToken = (request, response, next) => {
-  const token = request.headers['Authorization']
-  let status = 200
-  let dataToResponse = null
+  const token = request.headers['authorization']
 
   if(!token) {
-    dataToResponse = {ok: false, message: 'Token is not provided'}
+    response.status(401).json({ok: false, message: 'Token is not provided'})
   } else {
-    jswt.verify(token, 'asdasdasd',)
+    jwt.verify(token, 'azaz', (err, decoded) => {
+      if(err) {
+        response.status(401).json({ok: false, message: 'Token is not valid'})
+      } else {
+        request.decoded = decoded
+        next()
+      }
+    })
   }
 }
 
