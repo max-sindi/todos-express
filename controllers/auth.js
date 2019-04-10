@@ -15,7 +15,14 @@ export const login = async (request, response) => {
     if(!isValid) {
       dataToResponse = 'Invalid password'
     } else {
-      dataToResponse = {ok: true, token: jwt.sign({})}
+      dataToResponse = {
+        ok: true,
+        token: jwt.sign(
+          {username: email},
+          'azaz',
+          {expiresIn: '24h'}
+        )
+      }
     }
   }
 
