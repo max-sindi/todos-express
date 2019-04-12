@@ -5,7 +5,7 @@ const express = require('express');
 const app = require('express')();
 
 function main() {
-  // don't call next() if use in chain below o_O
+  // doesn't call next() if use in chain below o_O
   app.use(express.static(require('path').join(__dirname, 'public')));
 
   app.use(
@@ -16,7 +16,7 @@ function main() {
     require('cors')(),
   );
 
-  // before api declaring errorHandler
+  // before api-declaring errorHandler
   app.use((err, request, response, next) => {
     console.log('Error before api declaring: ', err.message)
   })
