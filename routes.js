@@ -7,8 +7,8 @@ import * as todosController from './controllers/todos'
 const router = require('express-promise-router')()
 
 module.exports = (app) => {
-  router.get('api/', function(req, res, next) {
-    res.status(200).json({ok: true, message: 'Successful lifecheck'})
+  router.get('/api/', function(req, res, next) {
+    res.status(200).json({ok: true, message: 'Successful life-check'})
   })
 
   /* AUTH */
