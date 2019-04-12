@@ -1,16 +1,20 @@
 const jwt = require('jsonwebtoken')
+const secret = process.env.JWT_SECRET_KEY
 
 const checkToken = (request, response, next) => {
   const token = request.headers['authorization']
+  const errorMessage = 'Permission denied'
 
   if(!token) {
-    response.status(401).json({ok: false, message: 'Token is not provided'})
+    console.log('Token is not provided')
+    response.status(401).json({ok: false, message: errorMessage})
   } else {
-    jwt.verify(token, 'azaz', (err, decoded) => {
+    jwt.verify(token, secret, (err, decoded) => {
       if(err) {
-        response.status(401).json({ok: false, message: 'Token is not valid'})
+        console.log('Invalid token')
+        response.status(401).json({ok: false, message: errorMessage})
       } else {
-        request.decoded = decoded
+        request.email = decoded.email
         next()
       }
     })

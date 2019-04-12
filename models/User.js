@@ -7,9 +7,11 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  // password: see below
 })
-
+// adds password field
 userSchema.plugin(require('mongoose-bcrypt'))
+
 // add id same as _id
 userSchema.virtual('id').get(function() {return this._id})
 userSchema.set('toJSON', {

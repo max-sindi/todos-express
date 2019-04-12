@@ -1,6 +1,0 @@
-import * as authController from '../controllers/auth'
-const router = require('express').Router()
-
-router.post('/login', authController.login)
-
-module.exports = router
