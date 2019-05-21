@@ -3,9 +3,9 @@ import Todo from '../models/Todo'
 import Joi from "joi"
 
 const schema = Joi.object().keys({
-  title: Joi.string().required(),
-  body: Joi.string().required(),
-  isDone: Joi.boolean().default(false)
+  // title: Joi.string().required(),
+  // body: Joi.string().required(),
+  // isDone: Joi.boolean().default(false)
 })
 
 export const getting = async (request, response, next) => {

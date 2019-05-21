@@ -24,11 +24,11 @@ module.exports = (app) => {
 
 
   /* TODOS */
-  router.get('/api/todos/', checkToken, todosController.getting, sendResponse)
-  router.post('/api/todos/', checkToken, todosController.creating, sendResponse)
-  router.get('/api/todos/:id', checkToken, todosController.gettingSingle, sendResponse)
-  router.put('/api/todos/:id', checkToken, todosController.updating, sendResponse)
-  router.delete('/api/todos/:id', checkToken, todosController.deleting, sendResponse)
+  router.get('/api/contacts/', todosController.getting, sendResponse)
+  router.post('/api/contacts/', todosController.creating, sendResponse)
+  router.get('/api/contacts/:id',todosController.gettingSingle, sendResponse)
+  router.put('/api/contacts/:id', todosController.updating, sendResponse)
+  router.delete('/api/contacts/:id', todosController.deleting, sendResponse)
 
 
   /* USE ROUTER */
