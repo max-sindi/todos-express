@@ -10,7 +10,7 @@ function main() {
 
   app.use(
     require('morgan')('dev'), // logger
-    express.json(),
+    express.json({limit: "100000kb"}),
     express.urlencoded({extended: false}),
     require('cookie-parser')(),
     require('cors')(),
