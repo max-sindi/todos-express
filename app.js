@@ -26,7 +26,7 @@ function main() {
   // api errorHandler
   app.use((err, request, response, next) => {
     console.log('Error in response')
-    response.json(err)
+    response.status(501).json(err)
   })
 
   console.log('Server runned at port 8000');

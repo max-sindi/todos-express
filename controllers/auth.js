@@ -1,6 +1,7 @@
 import User from '../models/User'
 import jwt from 'jsonwebtoken'
 const secret = process.env.JWT_SECRET_KEY
+const  bcrypt  =  require('bcryptjs');
 
 export const login = async (request, response) => {
   const {email, password} = request.body
@@ -30,4 +31,22 @@ export const login = async (request, response) => {
   }
 
   response.status(status).json(dataToResponse)
+}
+
+export const signup = async(request, response) => {
+  const {email, password} = request.body
+
+  try {
+    const user = await User.create({email, password: bcrypt.hashSync(password)})
+    response.status(200).json(user)
+  } catch(e) {
+    response.status(501).json(e)
+  }
+}
+
+export const isEmailAvailable = async(request, response) => {
+  const {email} = request.body
+
+  const count = await User.count({email})
+  response.json({ok: !count})
 }
