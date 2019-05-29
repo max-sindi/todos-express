@@ -9,8 +9,9 @@ const schema = Joi.object().keys({
 })
 
 export const getting = async (request, response, next) => {
-  const {limit = 20, offset = 0, search = ''} = request.query;
-  response.data = await Todo.find().skip(+offset).limit(+limit);
+  const {limit = 20, offset = 0} = request.query;
+  const search = new RegExp(request.query.search || '')
+  response.data = await Todo.find({title: search}).skip(+offset).limit(+limit);
   next()
 }
 
