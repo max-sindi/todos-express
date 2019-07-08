@@ -44,6 +44,10 @@ export const signup = async(request, response) => {
   }
 }
 
+export const isTokenValid = async(request, response) => {
+  response.json({ok: true})
+}
+
 export const isEmailAvailable = async(request, response) => {
   const {email} = request.body
 

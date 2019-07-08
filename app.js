@@ -1,6 +1,8 @@
 import './db';
+import unirest from 'unirest'
 require('dotenv').config();
 
+// console.log(unirest)
 const express = require('express');
 const app = require('express')();
 
