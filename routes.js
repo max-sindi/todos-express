@@ -23,11 +23,13 @@ module.exports = (app) => {
 
 
   /* USERS */
-  router.get('/api/users/', /*checkToken,*/ usersController.getting, sendResponse)
-  router.post('/api/users/', /*checkToken,*/ usersController.creating, sendResponse)
-  router.get('/api/users/:id', /*checkToken,*/ usersController.gettingSingle, sendResponse)
-  router.put('/api/users/:id', /*checkToken,*/ usersController.updating, sendResponse)
-  router.delete('/api/users/:id', /*checkToken,*/ usersController.deleting, sendResponse)
+  router.get('/api/user/', /*checkToken,*/ usersController.getting, sendResponse)
+  router.post('/api/user/', /*checkToken,*/ usersController.creating, sendResponse)
+  router.post('/api/user/:id/comment', /*checkToken,*/ usersController.comment, sendResponse)
+  router.get('/api/user/:id', /*checkToken,*/ usersController.gettingSingle, sendResponse)
+  router.put('/api/user/:id', /*checkToken,*/ usersController.updating, sendResponse)
+  router.delete('/api/user/:id', /*checkToken,*/ usersController.deleting, sendResponse)
+  router.get('/api/comments', usersController.fetchComments)
 
 
   /* TODOS */

@@ -7,8 +7,12 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+
+  received_comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }]
   // password: see below
 })
+
+
 // adds password field
 userSchema.plugin(require('mongoose-bcrypt'))
 

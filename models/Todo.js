@@ -1,8 +1,9 @@
 import mongoose from "mongoose"
 import searchable from 'mongoose-searchable'
+
 const todosSchema  = new mongoose.Schema({
-  title: {type: String, required: true },
-  body: {type: String, required: true},
+  title: {type: String,},
+  body: {type: String, },
   isDone: {type: Boolean, default: false}
 })
 

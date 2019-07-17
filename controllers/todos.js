@@ -3,15 +3,26 @@ import Todo from '../models/Todo'
 import Joi from "joi"
 
 const schema = Joi.object().keys({
-  title: Joi.string().required(),
-  body: Joi.string().required(),
+  title: Joi.string(),
+  body: Joi.string(),
   isDone: Joi.boolean().default(false)
 })
 
 export const getting = async (request, response, next) => {
   const {limit = 20, offset = 0} = request.query;
   const search = new RegExp(request.query.search || '')
-  response.data = await Todo.find({title: search}).skip(+offset).limit(+limit);
+
+  response.data = await Todo
+    .find({title: search})
+    .skip(+offset)
+    .limit(+limit)
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'comments',
+      }
+    });
+
   next()
 }
 

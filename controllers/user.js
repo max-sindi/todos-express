@@ -1,4 +1,5 @@
 import User from '../models/User'
+import Comment from '../models/Comment'
 import Joi from "joi"
 
 const schema = Joi.object().keys({
@@ -8,7 +9,7 @@ const schema = Joi.object().keys({
 
 export const getting = async (request, response, next) => {
   const {limit = 20, offset = 0, search = ''} = request.query;
-  response.data = await User.find().skip(+offset).limit(+limit);
+  response.data = await User.find().populate('received_comments').skip(+offset).limit(+limit);
   next()
 }
 
@@ -43,4 +44,38 @@ export const updating = async (request, response, next) => {
 export const deleting = async (request, response, next) => {
   response.data = await User.findByIdAndDelete(request.params.id);
   next();
+}
+
+
+export const comment = async (request, response) => {
+  const commentData = Object.assign(request.body, {
+    targetUserId: request.params.id
+  })
+
+  try {
+    const comment = await Comment.create(commentData)
+    const user = await User.findByIdAndUpdate(request.params.id, {"$push": {received_comments: comment.id}}, {new: true});
+    console.log('da ya tyt, request.body: ', request.body);
+    response.json(user)
+
+    // response.data = data;
+    // next();
+  } catch (e) {
+    console.error(e)
+    response.error(501).json(e)
+  }
+}
+
+export const fetchComments = async (request, response, next) => {
+  // response.data = await User.findByIdAndDelete(request.params.id);
+  try {
+    response.json(await Comment.find() )
+    // const comment = await Comment.create(request.body)
+    // console.log('da ya tyt, request.body: ', request.body);
+    // const data = comment;
+    // response.data = data;
+    // next();
+  } catch (e) {
+    console.error(e)
+  }
 }
