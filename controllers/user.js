@@ -8,19 +8,19 @@ const schema = Joi.object().keys({
   password: Joi.string().min(4).max(30),
 })
 
-export const getting = async (request, response, next) => {
+export const getList = async (request, response, next) => {
   const {limit = 20, offset = 0, search = ''} = request.query;
   // todo: do performance test: current populate place VS at the end of pipe
   response.data = await User.find().populate('received_comments').skip(+offset).limit(+limit);
   next()
 }
 
-export const gettingSingle = async (request, response, next) => {
+export const getSingle = async (request, response, next) => {
   response.data = await User.findById(request.params.id);
   next()
 }
 
-export const creating = async (request, response, next) => {
+export const create = async (request, response, next) => {
   const validated = Joi.validate(request.body, schema);
 
   if(validated.error) {
@@ -31,7 +31,7 @@ export const creating = async (request, response, next) => {
   }
 }
 
-export const updating = async (request, response, next) => {
+export const update = async (request, response, next) => {
   const {body, params: {id}} = request;
   const validated = Joi.validate(body, schema);
 
@@ -43,7 +43,7 @@ export const updating = async (request, response, next) => {
   }
 }
 
-export const deleting = async (request, response, next) => {
+export const destroy = async (request, response, next) => {
   response.data = await User.findByIdAndDelete(request.params.id);
   next();
 }
@@ -53,21 +53,11 @@ export const comment = async (request, response) => {
   const commentData = Object.assign(request.body, {
     targetUserId: request.params.id
   })
-
-  try {
-    const comment = await Comment.create(commentData)
-    const user = await User.findByIdAndUpdate(request.params.id, {"$push": {received_comments: comment.id}}, {new: true})
-    response.json(user)
-  } catch (e) {
-    console.error(e)
-    response.error(501).json(e)
-  }
+  const comment = await Comment.create(commentData)
+  const user = await User.findByIdAndUpdate(request.params.id, {"$push": {received_comments: comment.id}}, {new: true})
+  response.json(user)
 }
 
 export const fetchComments = async (request, response, next) => {
-  try {
-    response.json(await Comment.find() )
-  } catch (e) {
-    console.error(e)
-  }
+  response.json(await Comment.find() )
 }
