@@ -6,6 +6,7 @@ import * as todosController from './controllers/todos'
 import * as weatherController from './controllers/weather'
 import * as boardsController from './controllers/boards'
 import * as todoListsController from './controllers/todoLists'
+import * as Z from './controllers/z'
 
 const router = require('express-promise-router')()
 
@@ -56,6 +57,9 @@ module.exports = (app) => {
   router.put('/api/todo-list/:id', /*checkToken,*/ todoListsController.update)
   router.delete('/api/todo-list/:id', /*checkToken,*/ todoListsController.destroy)
   router.post('/api/todo-list/:id/todo', todoListsController.createTodo)
+
+  /* z */
+  router.post('/api/z', Z.update)
 
 
   /* USE ROUTER */
