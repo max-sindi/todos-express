@@ -7,8 +7,9 @@ const getAsync = promisify(client.get).bind(client);
 
 
 export const getState = async (request, response) => {
-  console.log('im here')
-  return await ZModel.find()
+  response.json({
+    template: JSON.parse (await getAsync('z'))
+  })
 }
 
 export const update = async (request, response) => {

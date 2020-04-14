@@ -60,6 +60,7 @@ module.exports = (app) => {
 
   /* z */
   router.post('/api/z', Z.update)
+  router.get('/api/z', Z.getState)
 
 
   /* USE ROUTER */
